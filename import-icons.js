@@ -32,7 +32,7 @@ const generateIconsJSON = (jsonFile, filename) => {
 			category: iconData.category,
 			tags: iconData.tags,
 			// unicode: iconData.unicode,
-			svg: prepareSvgFile(fs.readFileSync(`./node_modules/@tabler/icons/icons/${iconName}.svg`).toString())
+			svg: prepareSvgFile(fs.readFileSync(`./node_modules/@tabler/icons/icons/outline/${iconName}.svg`).toString())
 		})
 	}
 
@@ -42,4 +42,4 @@ const generateIconsJSON = (jsonFile, filename) => {
 	fs.writeFileSync(filename, JSON.stringify(svgData))
 }
 
-generateIconsJSON('./node_modules/@tabler/icons/tags.json', `./src/icons.json`)
+generateIconsJSON('./node_modules/@tabler/icons/icons.json', `./src/icons.json`)

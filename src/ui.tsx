@@ -28,7 +28,7 @@ type Icon = {
 	name: string,
 	svg: string,
 	category: string,
-	tags: string[]
+	tags: (string | number | null)[]
 }
 
 function IconButton({
