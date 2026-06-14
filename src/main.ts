@@ -6,7 +6,14 @@ export default function () {
     height: 400,
   });
 
-  function handleSubmit(data: { name: string; svg: string, outlineStroke: boolean }) {
+  function handleSubmit(
+      data: {
+          name: string,
+          svg: string,
+          outlineStroke: boolean,
+          createComponent: boolean,
+      }
+  ) {
     const icon = figma.createNodeFromSvg(data.svg);
 
     icon.name = `tabler-icon-${data.name}`;
@@ -24,7 +31,12 @@ export default function () {
       }
     }
 
-    figma.currentPage.selection = [icon];
+    if (data.createComponent) {
+        const comp = figma.createComponentFromNode(icon);
+        figma.currentPage.selection = [comp];
+    } else {
+        figma.currentPage.selection = [icon];
+    }
   }
 
   on("SUBMIT", handleSubmit);

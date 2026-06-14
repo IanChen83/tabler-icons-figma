@@ -12,6 +12,7 @@ import {
   DropdownOption,
   Dropdown,
   Columns,
+  Stack,
   Checkbox,
   Link,
 } from "@create-figma-plugin/ui";
@@ -35,10 +36,12 @@ function IconButton({
   icon,
   stroke,
   outlineStroke,
+  createComponent,
 }: {
   icon: Icon;
   stroke: string;
   outlineStroke: boolean;
+  createComponent: boolean;
 }) {
   const svg = icon.svg.replace('stroke-width="2"', `stroke-width="${stroke}"`);
 
@@ -47,6 +50,7 @@ function IconButton({
       name,
       svg,
       outlineStroke,
+      createComponent,
     });
   };
 
@@ -66,6 +70,7 @@ function Plugin() {
 	const [category, setCategory] = useState<string>('')
 	const [stroke, setStroke] = useState<string>('2')
 	const [outlineStroke, setOutlineStroke] = useState<boolean>(false);
+	const [createComponent, setCreateComponent] = useState<boolean>(false);
 
 	const results = useSearch(search, category)
 	const limit = 102
@@ -84,6 +89,10 @@ function Plugin() {
 
 	function handleOutlineChange(event: JSX.TargetedEvent<HTMLInputElement>) {
     setOutlineStroke(event.currentTarget.checked);
+  }
+
+	function handleCreateComponentChange(event: JSX.TargetedEvent<HTMLInputElement>) {
+    setCreateComponent(event.currentTarget.checked);
   }
 
 	let c: string[] = []
@@ -162,6 +171,7 @@ function Plugin() {
               icon={icon}
               stroke={stroke}
               outlineStroke={outlineStroke}
+              createComponent={createComponent}
             />
           ))}
         </div>
@@ -196,18 +206,15 @@ function Plugin() {
         <Divider />
         <Container space="medium">
           <VerticalSpace space="small" />
-          <Columns style={{ alignItems: "center" }}>
-            <Checkbox onChange={handleOutlineChange} value={outlineStroke}>
-              <Text>Paste icons as outline</Text>
-            </Checkbox>
-            <Text align="right">
-              <Link
-                href="https://tabler-icons.io/?utm_source=figma-plugin"
-                target="_blank"
-              >
-                Tabler Icons
-              </Link>
-            </Text>
+          <Columns style={{ alignItems: "end" }}>
+            <Stack space="extraSmall">
+              <Checkbox onChange={handleOutlineChange} value={outlineStroke}>
+                <Text>Paste icons as outline</Text>
+              </Checkbox>
+              <Checkbox onChange={handleCreateComponentChange} value={createComponent}>
+                <Text>Create component</Text>
+              </Checkbox>
+            </Stack>
           </Columns>
           <VerticalSpace space="small" />
         </Container>
